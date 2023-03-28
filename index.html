@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warung Tutup Gorden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" 
+    crossorigin="anonymous"
+    >
+</head>
+<body>
+    <div class="container">
+        <form class="row g-4 needs-validation" nonvalidate onSubmit="validasi()">
+            
+            <!-- title form -->
+            <div class="row text-bg-secondary text-center mt-5">
+                <h2>Silahkan Pesan</h2>
+            </div>
+            
+            <!-- menu makanan-->
+            <div class="my-4 row">
+                <div class="col">
+                    <label for="makanan" class="form-label">Menu Makanan</label>
+                    <select class="form-select" id="makanan">
+                        <option selected>Pilih Makanan</option>
+                        <option value="ricarica_biawak">Rica-Rica Biawak</option>
+                        <option value="kreco">Kreco</option>
+                        <option value="sate_kelinci">Sate Kelinci</option>
+                        <option value="sate_bekicot">Sate Bekicot</option>
+                        <option value="lontong_balap">Lontong Balap</option>
+                    </select>
+                </div>
+                <div class="col d-flex align-items-end justify-content-center">
+                    <div class="text-center col">
+                        <h5>Harga : </h5>
+                    </div>
+                    <div class="col" id="harga_makanan">
+                        <h5>Rp. 0</h5>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- menu minuman -->
+            <div class="my-4 row">
+                <div class="col">
+                    <label for="minuman" class="form-label">Menu Minuman</label>
+                    <select class="form-select" id="minuman">
+                        <option selected>Pilih Minuman</option>
+                        <option value="es_teh">Es Teh</option>
+                        <option value="teh_tawar">Teh Tawar</option>
+                        <option value="teh_anget">Teh Anget</option>
+                        <option value="es_teh_anget">Es Teh Anget</option>
+                        <option value="kopi_hitam">Kopi Hitam</option>
+                    </select>
+                </div>
+                <div class="col d-flex align-items-end justify-content-center">
+                    <div class="text-center col">
+                        <h5>Harga : </h5>
+                    </div>
+                    <div class="col" id="harga_minuman">
+                        <h5>Rp. 0</h5>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- jumlah pesanan -->
+            <div class="my-4 row">
+            
+                <!-- jumlah makanan -->
+                <div class="col">
+                    <label for="jumlah_makanan" class="form-label">Porsi Makanan</label>
+                    <input type="number" class="form-control" id="jumlah_makanan" min="1" value="1">
+                </div>
+             
+                <!-- jumlah minuman -->
+                <div class="col">
+                    <label for="jumlah_minuman" class="form-label">Porsi Minuman</label>
+                    <input type="number" class="form-control" id="jumlah_minuman" min="1" value="1">
+                </div>
+             
+                <!-- total -->
+                <div class="my-5 row">
+                    <div class="col">
+                        <span class="text-center" id="total_harga">Total Harga : Rp. 0</span>
+                    </div>
+                </div>
+             
+                <!-- bayar -->
+                <div class="row my-1">
+                    <div class="col">
+                        <label for="bayar_pesanan" class="form-label">Bayar Pesanan</label>
+                        <input type="number" class="form-control" id="bayar_pesanan" value="0">
+                    </div>
+             
+                    <!-- kembalian -->
+                    <div class="col text-center">
+                        <h5>Kembalian : </h5>
+                    </div>
+                    <div class="col" id="sisa_kembalian">
+                        <h5>Rp. 0</h5>
+                    </div>
+                </div>
+             
+                <!-- button pesan -->
+                <div class="my-4 row">
+                    <div class="col text-center">
+                        <button type="submit" class="btn btn-success">Pesan</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" 
+    crossorigin="anonymous">
+    </script>
+    
+    <!-- function javascript -->
+    <script type="text/javascript">
+        
+        // deklarasi elemen html berdasarkan id
+        const makanan = document.getElementById('makanan');
+        const harga_makanan = document.getElementById('harga_makanan');
+        const minuman = document.getElementById('minuman');
+        const harga_minuman = document.getElementById('harga_minuman');
+        const jumlah_makanan = document.getElementById('jumlah_makanan');
+        const jumlah_minuman = document.getElementById('jumlah_minuman');
+        const total_harga = document.getElementById('total_harga');
+        const bayar_pesanan = document.getElementById('bayar_pesanan');
+        const sisa_kembalian = document.getElementById('sisa_kembalian');
+
+        // harga makanan
+        const ListHargaMakanan = {
+            ricarica_biawak: 18000,
+            kreco: 10000,
+            sate_kelinci: 15000,
+            sate_bekicot: 10000,
+            lontong_balap: 15000
+        };
+
+        // harga minuman
+        const ListHargaMinuman = {
+            es_teh: 3500,
+            teh_tawar: 3000,
+            teh_anget: 3500,
+            es_teh_anget: 5000,
+            kopi_hitam: 5000
+        };
+
+        // tampil harga makanan
+        makanan.addEventListener('change', function(){
+            const harga = ListHargaMakanan[this.value];
+            if(harga) {
+                harga_makanan.innerHTML = '<h5>Rp. ' + harga + '</h5>';
+            } else {
+                harga_makanan.innerHTML = '<h5>Rp. 0</h5>';
+            }
+            HitungTotal();
+        });
+
+        // tampil harga minuman
+        minuman.addEventListener('change', function(){
+            const harga = ListHargaMinuman[this.value];
+            if(harga) {
+                harga_minuman.innerHTML = '<h5>Rp. ' + harga + '</h5>';
+            } else {
+                harga_minuman.innerHTML = '<h5>Rp. 0</h5>';
+            }
+            HitungTotal();
+        });
+
+        // hitung total
+        function HitungTotal(){
+            const HargaMakanan = harga_makanan.innerText.replace('Rp. ', '');
+            const HargaMinuman = harga_minuman.innerText.replace('Rp. ', '');
+            const JumlahMakanan = parseInt(jumlah_makanan.value);
+            const JumlahMinuman = parseInt(jumlah_minuman.value);
+            const Total = (HargaMakanan * JumlahMakanan) + (HargaMinuman * JumlahMinuman);
+            total_harga.innerHTML = '<span class="text-center" id="totalHarga">Total Harga : Rp. ' + Total + '</span>';
+
+            if(bayar_pesanan.value != 0){
+                HitungKembalian(Total);
+            }
+        }   
+
+        // hitung sisa kembali
+        function HitungKembalian(Total){
+            const Bayar = parseInt(bayar_pesanan.value);
+            const Kembalian = Bayar - Total;
+            sisa_kembalian.innerHTML = '<h5> Rp. ' + Kembalian + '</h5>';
+        }
+
+        // fuction button
+        document.querySelector('form').addEventListener('submit', function(event){
+            event.preventDefault();
+            HitungTotal();
+        });
+        
+        // function validasi() {
+        //     var bayar_pesanan = document.getElementById("bayar_pesanan").value;
+        //     var total_harga= document.getElementById("total_harga").value;
+        //     if (bayar_pesanan > total_harga) {
+        //         return true;
+        //     }else{
+        //         alert('Uang anda tidak cukup');
+        //     }
+        // }
+    </script>
+</body>
+</html>
